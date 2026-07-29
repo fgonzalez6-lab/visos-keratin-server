@@ -1,7 +1,6 @@
 const express = require("express");
 const twilio = require("twilio");
 const cors = require("cors");
-const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const app = express();
@@ -117,37 +116,10 @@ async function enviarWA(to, body) {
 
 // ── Enviar Email helper (via Twilio SendGrid si está configurado) ─
 async function enviarEmail(to, subject, bodyText) {
-  // Usar Gmail via nodemailer
-  const gmailUser = process.env.GMAIL_USER;
-  const gmailPass = process.env.GMAIL_PASS;
-  if (!gmailUser || !gmailPass) {
-    console.log(`📧 Email omitido — configura GMAIL_USER y GMAIL_PASS en Railway`);
-    return { ok: false, note: "Gmail no configurado" };
-  }
-  try {
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      requireTLS: true,
-      auth: { user: gmailUser, pass: gmailPass },
-      tls: { rejectUnauthorized: false }
-    });
-    await transporter.sendMail({
-      from: `"Visos Keratin" <${gmailUser}>`,
-      to,
-      subject,
-      text: bodyText,
-      html: bodyText.replace(/\n/g,'<br>').replace(/\*(.*?)\*/g,'<strong>$1</strong>')
-    });
-    console.log(`✅ Email → ${to}`);
-    return { ok: true };
-  } catch(e) {
-    console.error(`❌ Email error:`, e.message);
-    return { ok: false, error: e.message };
-  }
+  // Email desactivado — solo se usan notificaciones WhatsApp
+  console.log(`📧 Email omitido (desactivado): ${to}`);
+  return { ok: false, note: "Email desactivado" };
 }
-
 // ════════════════════════════════════════════════════════════════
 // ENDPOINT: Nueva cita agendada
 // ════════════════════════════════════════════════════════════════
