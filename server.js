@@ -40,6 +40,9 @@ function normalizarTelefono(tel) {
 
 // ── Mensaje para la clienta ──────────────────────────────────────
 function msgClientaCita(c) {
+  const cancelLink = c.firebaseKey
+    ? `https://visoskeratin.vercel.app?cancelar=${c.firebaseKey}`
+    : `https://visoskeratin.vercel.app`;
   return (
     `✂️ *Visos Keratin* — ¡Cita confirmada!\n\n` +
     `Hola ${c.nombre} 💛\n\n` +
@@ -50,9 +53,9 @@ function msgClientaCita(c) {
     `🕐 *Hora:* ${c.horaInicio} – ${c.horaFin} aprox.\n\n` +
     `📌 _Recuerda asistir sin niños ni acompañantes._\n\n` +
     `❌ *¿Necesitas cancelar tu cita?*\n` +
-    `Ingresa a este enlace y cancela fácilmente:\n` +
-    `https://visoskeratin.vercel.app\n` +
-    `_(Busca tu cita y toca "Cancelar mi cita")_\n\n` +
+    `Solo puedes cancelar con mínimo *5 horas de anticipación.*\n` +
+    `Toca este enlace para cancelar directamente:\n` +
+    `${cancelLink}\n\n` +
     `¡Te esperamos con todo listo! 💇‍♀️\n` +
     `_Visos Keratin: ¡Donde tu cabello encuentra su mejor versión!_`
   );
@@ -134,8 +137,11 @@ app.post("/agendar", async (req, res) => {
   const cita = { nombre, telefono: telefonoNorm, correo, servicios, estilista, fecha, horaInicio, horaFin };
   console.log(`\n🆕 Nueva cita: ${nombre} | ${servicios} | ${fecha} ${horaInicio} | Tel: ${telefonoNorm}`);
 
+  // Incluir la clave de Firebase en el mensaje para el enlace de cancelación
+  const citaConKey = { ...cita, firebaseKey: req.body.firebaseKey || '' };
+
   const [waClientа, waDuena] = await Promise.all([
-    enviarWA(telefonoNorm, msgClientaCita(cita)),
+    enviarWA(telefonoNorm, msgClientaCita(citaConKey)),
     enviarWA(OWNER_WA.replace("whatsapp:", ""), msgDuena(cita)),
   ]);
 
