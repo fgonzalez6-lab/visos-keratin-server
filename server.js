@@ -1,6 +1,7 @@
 const express = require("express");
 const twilio = require("twilio");
 const cors = require("cors");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const app = express();
@@ -117,7 +118,6 @@ async function enviarWA(to, body) {
 // ── Enviar Email helper (via Twilio SendGrid si está configurado) ─
 async function enviarEmail(to, subject, bodyText) {
   // Usar Gmail via nodemailer
-  const nodemailer = require('nodemailer');
   const gmailUser = process.env.GMAIL_USER;
   const gmailPass = process.env.GMAIL_PASS;
   if (!gmailUser || !gmailPass) {
