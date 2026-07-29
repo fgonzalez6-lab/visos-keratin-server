@@ -126,8 +126,12 @@ async function enviarEmail(to, subject, bodyText) {
   }
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: { user: gmailUser, pass: gmailPass }
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: { user: gmailUser, pass: gmailPass },
+      tls: { rejectUnauthorized: false }
     });
     await transporter.sendMail({
       from: `"Visos Keratin" <${gmailUser}>`,
