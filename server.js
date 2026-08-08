@@ -40,9 +40,7 @@ function normalizarTelefono(tel) {
 
 // ── Mensaje para la clienta ──────────────────────────────────────
 function msgClientaCita(c) {
-  const cancelLink = c.firebaseKey
-    ? `https://visoskeratin.vercel.app?cancelar=${c.firebaseKey}`
-    : `https://visoskeratin.vercel.app`;
+  // cancelLink ahora apunta directamente a cancelar.html
   return (
     `✂️ *Visos Keratin* — ¡Cita confirmada!\n\n` +
     `Hola ${c.nombre} 💛\n\n` +
@@ -55,7 +53,7 @@ function msgClientaCita(c) {
     `❌ *¿Necesitas cancelar tu cita?*\n` +
     `Recuerda que puedes cancelar con mínimo *5 horas de anticipación.*\n` +
     `Toca este enlace para cancelar directamente:\n` +
-    `${cancelLink}\n\n` +
+    `https://visoskeratin.vercel.app/cancelar.html?cancelar=${c.firebaseKey}\n\n` +
     `¡Te esperamos con todo listo! 💇‍♀️\n` +
     `_Visos Keratin: ¡Donde tu cabello encuentra su mejor versión!_`
   );
