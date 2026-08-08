@@ -53,7 +53,7 @@ function msgClientaCita(c) {
     `🕐 *Hora:* ${c.horaInicio} – ${c.horaFin} aprox.\n\n` +
     `📌 _Recuerda asistir sin niños ni acompañantes._\n\n` +
     `❌ *¿Necesitas cancelar tu cita?*\n` +
-    `Solo puedes cancelar con mínimo *5 horas de anticipación.*\n` +
+    `Recuerda que puedes cancelar con mínimo *5 horas de anticipación.*\n` +
     `Toca este enlace para cancelar directamente:\n` +
     `${cancelLink}\n\n` +
     `¡Te esperamos con todo listo! 💇‍♀️\n` +
